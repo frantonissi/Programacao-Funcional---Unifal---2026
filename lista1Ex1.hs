@@ -1,3 +1,4 @@
+{- HLINT ignore "Use guards" -}
 f1 :: Float -> Float
 f1 x = if x >= 0 then (x+4)/(x+2) else 2/x
 
@@ -12,4 +13,4 @@ main :: IO()
 main = do
     print (f1 2)
     print (f2 5 10)
-    print (f3 10 20 30)
+    print (f3 11 20 30)
