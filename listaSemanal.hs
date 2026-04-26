@@ -66,3 +66,8 @@ contList x (a:as)
 reverseList :: [Int] -> [Int] --[1,2,3] -> [3,2,1]
 reverseList [] = []
 reverseList (a:b) = reverseList b ++ [a]
+
+duplica :: [Int] -> [Int]
+duplica [] = []
+duplica (a:as) = a : a : duplica as --a : (a : (duplica as)), o ':' serve pra pegar um elemento e colar na frente da lista, ou no fim
+
