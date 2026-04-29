@@ -103,25 +103,21 @@ myInit [] = []
 myInit [a] = []
 myInit [a,b] = [a]
 myInit (a:as) = a : myInit as
- 
-{- função que gera uma lista de booleanos relativa à comparação entre os elementos e um parâmetro z 
-gBool :: [Int]->Int-> [Bool]
+
+
+maxi :: Int -> Int -> Int
+maxi m n
+    |m > n = m
+    |otherwise = n
+
+--8a
 
 
 
--} 
-
-
-
-
-
-
-
-
-
-
-
-
+--8b
+maiorVendaT::[(Int, Int)] -> Int
+maiorVendaT [] = 0
+maiorVendaT ((a,b):c) = maxi b (maiorVendaT c) 
 
 
 
@@ -137,8 +133,19 @@ gBool :: [Int]->Int-> [Bool]
 
 
 
---gBool [] _ = []
---gBool (a:x) z = (a>z):gBool x z
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
