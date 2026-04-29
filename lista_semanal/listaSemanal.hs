@@ -1,3 +1,6 @@
+----------------------------------------SEMANA 02-------------------------------------------------
+
+
 {-
 {- 01 função que soma os elementos de uma lista -}
 sumList::[Int]->Int
@@ -104,6 +107,7 @@ myInit [a] = []
 myInit [a,b] = [a]
 myInit (a:as) = a : myInit as
 
+----------------------------------------SEMANA 03-------------------------------------------------
 
 maxi :: Int -> Int -> Int
 maxi m n
@@ -111,6 +115,7 @@ maxi m n
     |otherwise = n
 
 --8a
+
 
 
 
