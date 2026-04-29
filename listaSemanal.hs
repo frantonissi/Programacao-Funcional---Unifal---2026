@@ -71,3 +71,79 @@ duplica :: [Int] -> [Int]
 duplica [] = []
 duplica (a:as) = a : a : duplica as --a : (a : (duplica as)), o ':' serve pra pegar um elemento e colar na frente da lista, ou no fim
 
+--7
+--8
+
+
+
+-------------------------------------------------------------
+{- Exercícios
+     Implementar as funções: 
+       myHead que recebe uma lista x e retorna a cabeça de x
+       myTail que recebe uma lista x e retorna a lista x sem a cabeça
+       myLast que recebe uma lista x e retorna o último elemento de x
+       myInit que recebe uma lista x e retorna a lista x sem o último elemento
+
+-}
+
+myHead :: [Int] -> Int
+myHead [] = 0
+myHead (a:as) = a
+
+myTail :: [Int] -> [Int]
+myTail [] = []
+myTail (a:as) = myTail as
+
+myLast :: [Int] -> Int
+myLast [a] = a  --Nao pode colocar só a do lado esquerdo do = porque aí o a do lado direito vira uma lista, e a funcao só retorna um Int
+myLast (a:as) = myLast as
+
+myInit :: [Int] -> [Int]
+myInit [] = []
+myInit [a] = []
+myInit [a,b] = [a]
+myInit (a:as) = a : myInit as
+ 
+{- função que gera uma lista de booleanos relativa à comparação entre os elementos e um parâmetro z 
+gBool :: [Int]->Int-> [Bool]
+
+
+
+-} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--gBool [] _ = []
+--gBool (a:x) z = (a>z):gBool x z
+
+
+
+
+
+
+
+
