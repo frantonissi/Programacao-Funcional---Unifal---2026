@@ -104,7 +104,7 @@ myLast (a:as) = myLast as
 myInit :: [Int] -> [Int]
 myInit [] = []
 myInit [a] = []
-myInit [a,b] = [a]
+--myInit [a,b] = [a]
 myInit (a:as) = a : myInit as
 
 ----------------------------------------SEMANA 03-------------------------------------------------
