@@ -1,0 +1,5 @@
+separa :: [Int] -> ([Int], [Int])
+separa [] = ([],[])
+separa(a:b)
+    |a `mod` 2 == 0 = (fst (separa b), a : snd (separa b)) 
+    |otherwise = (a : fst (separa b), snd (separa b)) 
