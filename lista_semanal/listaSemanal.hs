@@ -140,18 +140,26 @@ listasVendas n
     |n == 0 = [vendas n]
     |otherwise = listasVendas (n - 1) ++ [vendas n]
 
-
-
-
 {- 02 função que retorna [[Int]] com listas de dia e venda -}
 
 f2L :: Int -> [[Int]]
-f2L 0 = []
+f2L 0 = [   ]
 f2L n =  f2L (n - 1) ++ [[n, vendas n]]
 
 ----------------------------------------------------------
 {- 03 função que ordena uma lista de inteiros -}
---ordenaLista::[Int]->[Int]
+passadaBubble::[Int]->[Int]
+passadaBubble [] = []
+passadaBubble [a] = [a]
+passadaBubble (a:b:c)
+    |a > b = b : passadaBubble (a:c)
+    |otherwise = a : passadaBubble (b:c)
+
+
+ordenaLista :: [Int] -> [Int]
+ordenaLista a
+    |a == passadaBubble a = a
+    |otherwise = ordenaLista (passadaBubble a)
 
 
 -------------------------------------------------------------------------
