@@ -200,6 +200,57 @@ maiorVendaT8d c = maxi (snd (head c)) (maiorVendaT8d (tail c))
 
 {- 09 função que retorna os dias das maiores vendas -}
 
+--Semana 05--
+
+
+{- objetivo desta aula: 
+    - Trabalhar os tipos lista e tuplas 
+    - introduzir o uso de where
+    - atentar para a base da função 02
+-}
+
+--01- Operador que defina o menor entre dois inteiros
+
+infix 7 &<&
+(&<&) :: Int -> Int -> Int
+x &<& y
+    |x < y = x
+    |otherwise = y
+  
+--02- função que retorna o menor de uma [Int]
+
+menorL :: [Int] -> Int
+menorL [a] = a
+menorL (a : b) = a &<& menorL b
+
+--03- função que gera uma dupla com o menor e a lista de entrada
+
+menorD::[Int]->(Int, [Int])
+menorD x = (menorL x, x)
+
+--04- função que recebe uma dupla com o menor de uma lista e a lista e retorna a lista sem o menor
+
+filtraL :: (Int, [Int]) -> [Int]
+filtraL (_,[]) = []
+filtraL (a, (b:x))
+    |a == b = x
+    |otherwise =  b :  filtraL (a, x)
+
+--05 função que recebe uma dupla com o menor e a lista original e retorna uma lista ordenada  
+
+f5 :: (Int, [Int]) -> [Int]
+f5 (x, []) = []
+f5 (x, a) = x : f5(menorD (filtraL (x, a)))
+
+--06 função interface para ordenar a lista de entrada
+
+
+--Quais funções podem ser simplificadas para essa ordenação?
+
+
+
+
+
 
 
 
