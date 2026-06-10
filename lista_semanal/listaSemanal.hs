@@ -1,252 +1,111 @@
-----------------------------------------SEMANA 02-------------------------------------------------
+
+{-Objetivo da aula 
+  exercícios e introdução à List Comprehension-}
+
+import Data.Char
+
+-- List comprehension---------------------------------------
+
+{-multiplica todos elementos pares da lista pela escalar -}
+f1 :: Int -> [Int] -> [Int]
+f1 x a = [x * y|y <- a, y `mod` 2 == 0 ]
+
+{-dado um booleano, decide por multiplicar todos elementos por 2 ou somar todos elementos com 5 -}
+f2 :: Bool -> [Int] -> [Int]
+f2 x a
+    |x = [2 * y|y <- a]
+    |otherwise = [5 + y|y <- a]
+
+{-fazer a função f0 que agrupa em duplas os cabeças de duas listas-}
+f0 ::[t]->[u]->[(t,u)]
+f0 [] [] = []
+f0 (a:b) (c:d) = [(a,c)] ++ f0 b d
 
 
-{-
-{- 01 função que soma os elementos de uma lista -}
-sumList::[Int]->Int
-sumList [] = 0
+{-objetivo da computação dado em sala de aula:
+  Filtrar o resultado de produto cartesiano 
+  para gerar o resultado de f0-}  
+{- gera o produto cartesiano entre duas listas -}  
 
-{- 02-localiza elemento em lista -}
-searchList::Int->[Int]->Bool
-searchList _ _ = False
-
-{-03 remove todas ocorrências de y em uma lista -}
-deleteList::Int->[Int]->[Int]
-deleteList _ _ = []
-
-{-04 informa o tamanho de uma lista -}
-lenghtList::[Int]->Int
-lenghtList _ = 0
-
-{-05 conta a ocorrência de um Int em [Int] -}
-contList::Int->[Int]->Int
-contList _ _ = 0
-
-{- 06 inverte a lista -}
-reverseList:: [Int]->[Int]
-reverseList _ = []
-
-{- 07 inverte elementos das listas internas -}
-
-{- 08 função que exclui a penúltima ocorrência de um número na lista-}
-
--}
------------------------------------------------------------------------------------------------
-
---1
-sumList :: [Int] -> Int
-sumList [] = 0
-sumList (a:b) = a + sumList b --cabeça + as novas cabeças que antigamente eram caudas, poe só b, porque b é uma lista, (o [Int] que o programa recebe), se colocasse [b], ai seria uma lista de lista
-
---2
-searchList :: [Int] -> Int -> Bool
-searchList [] _ = False
-searchList (a:b) x
-    |a /= x = searchList b x
-    |otherwise = True
-
---3
-deleteList::[Int]->[Int] --[1,2,2,3] -> [1,2,3]
-deleteList [] = []
-deleteList [a] = [a]
-deleteList (a : b : as)
-    |a == b = deleteList (b:as)
-    |otherwise = a : deleteList (b:as)
-
---4
-lenghList:: [Int] -> Int
-lenghList [] = 0
-lenghList (a:b) = 1 + lenghList b
-
---5
-contList::Int->[Int]->Int --1 [1,2,3,1] -> 2
-contList _ [] = 0
-contList x (a:as)
-    |a == x = 1 + contList x as
-    |otherwise = 0 + contList x as
-
---6
-reverseList :: [Int] -> [Int] --[1,2,3] -> [3,2,1]
-reverseList [] = []
-reverseList (a:b) = reverseList b ++ [a]
-
-duplica :: [Int] -> [Int]
-duplica [] = []
-duplica (a:as) = a : a : duplica as --a : (a : (duplica as)), o ':' serve pra pegar um elemento e colar na frente da lista, ou no fim
-
---7
---8
+--f3::[t]->[u]->[(t,u)]
 
 
 
--------------------------------------------------------------
-{- Exercícios
-     Implementar as funções: 
-       myHead que recebe uma lista x e retorna a cabeça de x
-       myTail que recebe uma lista x e retorna a lista x sem a cabeça
-       myLast que recebe uma lista x e retorna o último elemento de x
-       myInit que recebe uma lista x e retorna a lista x sem o último elemento
-
--}
-
-myHead :: [Int] -> Int
-myHead [] = 0
-myHead (a:as) = a
-
-myTail :: [Int] -> [Int]
-myTail [] = []
-myTail (a:as) = myTail as
-
-myLast :: [Int] -> Int
-myLast [a] = a  --Nao pode colocar só a do lado esquerdo do = porque aí o a do lado direito vira uma lista, e a funcao só retorna um Int
-myLast (a:as) = myLast as
-
-myInit :: [Int] -> [Int]
-myInit [] = []
-myInit [a] = []
---myInit [a,b] = [a]
-myInit (a:as) = a : myInit as
-
-----------------------------------------SEMANA 03-------------------------------------------------
-
-maxi :: Int -> Int -> Int
-maxi m n
-    |m > n = m
-    |otherwise = n
-
-{- Assunto: listas e tuplas -}
-
-periodo::Int
-periodo = 7
+{- desfaz a lista de duplas gerada por f3 -}
+--f3_aux01 ::[(t,u)]-> ([t],[u])
 
 
+{-conta as ocorrências repetidas de fst(dupla) 
+  da lista gerada por f3 -}
+--f3_count ::(Eq t)=>[(t,u)]-> Int
 
 
--- tabela de vendas
-vendas :: Int -> Int
-vendas 0 = 0
-vendas 1 = 41
-vendas 2 = 72
-vendas 3 = 48
-vendas 4 = 0
-vendas 5 = 91
-vendas 6 = 55
-vendas 7 = 30
+{-solução que gera lista de listas de duplas separando as listas com duplas com mesmo fst-}
+--f3_newList::(Eq u)=> u-> [(u,t)]->[(u,t)]
+--f3_newList a l = [b|b<-l, a==fst b]
 
-{- 01 função que retorna uma lista de vendas -}
+--f3_newListDel::(Eq u)=> u-> [(u,t)]->[(u,t)]
+--f3_newListDel a l = [b|b<-l, a/=fst b]
 
-listasVendas :: Int -> [Int]
-listasVendas n
-    |n == 0 = [vendas n]
-    |otherwise = listasVendas (n - 1) ++ [vendas n]
+--f3_newListofList::(Eq u)=>[(u,t)]->[[(u,t)]]
+--f3_newListofList   []      = []
+--f3_newListofList   (a:x)   = (f3_newList (fst a) (a:x)):f3_newListofList (f3_newListDel (fst a) (a:x))
 
-{- 02 função que retorna [[Int]] com listas de dia e venda -}
+{- função que gera o filtro no produto cartesiano 
+   -------aqui, tem algo a ser ajustado---------}
+   
+--f3_filtra::Int->[[(u,t)]]->[(u,t)]
+--f3_filtra   _   [] = []
+--f3_filtra     i (a:b)= busca i a:f3_filtra (i+1) b
 
-f2L :: Int -> [[Int]]
-f2L 0 = [   ]
-f2L n =  f2L (n - 1) ++ [[n, vendas n]]
-
-----------------------------------------------------------
-{- 03 função que ordena uma lista de inteiros -}
-passadaBubble::[Int]->[Int]
-passadaBubble [] = []
-passadaBubble [a] = [a]
-passadaBubble (a:b:c)
-    |a > b = b : passadaBubble (a:c)
-    |otherwise = a : passadaBubble (b:c)
-
-
-ordenaLista :: [Int] -> [Int]
-ordenaLista a
-    |a == passadaBubble a = a
-    |otherwise = ordenaLista (passadaBubble a)
-
-
--------------------------------------------------------------------------
-{- 04 função que ordena [[Int]] pelo primeiro Int de cada lista  -}
---ordenaListaLista::[[Int]]->[[Int]]
-
-
----------------------------------------------------------------------------
-{- 05 função que ordena as listas internas de [[Int]] e, em seguida, ordena a [[Int]] -}
---ordenaLILE::[[Int]] ->[[Int]]
-
-
------------  tuplas --------------------------------------------------------
-{- 06 função que gera uma lista de tuplas com dia e venda -}
-f6T :: Int-> [(Int, Int)]
-f6T 0 = []
-f6T x = (x,vendas x):f6T (x-1)
-
-{- 07 função que gera o total de vendas-}
---totalVendasT::[(Int, Int)] -> Int
-
-{- 08 função que retorna a maior venda -}
-
---maiorVendasT8a::Int-> [(Int, Int)] -> Int 
-
-{- 08-b como implementar com apenas os parâmetros? -}
-maiorVendaT8b::[(Int, Int)] -> Int
-maiorVendaT8b [] = 0
-maiorVendaT8b ((a,b):c) = maxi b (maiorVendaT8b c)
-
-maiorVendaT8c::[(Int, Int)] -> Int
-maiorVendaT8c [] = 0
-maiorVendaT8c (a:c) = maxi (snd a) (maiorVendaT8c c)
-
-maiorVendaT8d::[(Int, Int)] -> Int
-maiorVendaT8d [] = 0
-maiorVendaT8d c = maxi (snd (head c)) (maiorVendaT8d (tail c))
-
-{- 09 função que retorna os dias das maiores vendas -}
-
---Semana 05--
-
-
-{- objetivo desta aula: 
-    - Trabalhar os tipos lista e tuplas 
-    - introduzir o uso de where
-    - atentar para a base da função 02
--}
-
---01- Operador que defina o menor entre dois inteiros
-
-infix 7 &<&
-(&<&) :: Int -> Int -> Int
-x &<& y
-    |x < y = x
-    |otherwise = y
+--busca::Int->[(u,t)]->(u,t)
+--busca i (a:b)
+--  | i/=0      = busca (i-1) b
+ -- | otherwise = a
   
---02- função que retorna o menor de uma [Int]
 
-menorL :: [Int] -> Int
-menorL [a] = a
-menorL (a : b) = a &<& menorL b
+------- Revisão -----------------------------------------------------
 
---03- função que gera uma dupla com o menor e a lista de entrada
+{-01 função que retorna lista de duplas com char e posição na ASCII -}
 
-menorD::[Int]->(Int, [Int])
-menorD x = (menorL x, x)
-
---04- função que recebe uma dupla com o menor de uma lista e a lista e retorna a lista sem o menor
-
-filtraL :: (Int, [Int]) -> [Int]
-filtraL (_,[]) = []
-filtraL (a, (b:x))
-    |a == b = x
-    |otherwise =  b :  filtraL (a, x)
-
---05 função que recebe uma dupla com o menor e a lista original e retorna uma lista ordenada  
-
-f5 :: (Int, [Int]) -> [Int]
-f5 (x, []) = []
-f5 (x, a) = x : f5(menorD (filtraL (x, a)))
-
---06 função interface para ordenar a lista de entrada
+listaDuplaCharInt:: Int-> [(Char,Int)]
+listaDuplaCharInt 0 = []
+listaDuplaCharInt x = [(chr x, x)] ++ listaDuplaCharInt (x - 1)
 
 
---Quais funções podem ser simplificadas para essa ordenação?
+{-02 função meuChr que pesquisa um char pelo int na lista gerada -}
 
+meuChr :: Int -> Char
+meuChr x = meuChr_aux x (listaDuplaCharInt 126)
+
+meuChr_aux :: Int -> [(Char, Int)] -> Char
+meuChr_aux x (a:b)
+    |x == snd(a) = fst(a)
+    |otherwise = meuChr_aux x b
+
+{-03 função meuOrd que pesquisa o int pelo char na lista gerada -}
+meuOrd :: Char -> Int
+meuOrd x = meuOrd_aux x (listaDuplaCharInt 126)
+
+meuOrd_aux :: Char -> [(Char, Int)] -> Int
+meuOrd_aux x [] = error "Caracter nao encontrado"
+meuOrd_aux x (a:b)
+    |x == fst(a) = snd a
+    |otherwise = meuOrd_aux x b
+
+{-04 função que ordena uma lista de inteiros -}
+ordenaLista::[Int]->[Int]
+ordenaLista [] = []
+
+{-05 seja o tipo [(Bool, [Int])]. 
+Faça uma função que ordena [Int] quando o booleano é True. 
+Também, passe o Bool para False, quando ordenar [Int]
+exemplo: ordenaListaDupla [(True,[3,4,1,0,9]),(False,[]),(True,[4,3,2,1,0])]
+retorna:                  [(False,[0,1,3,4,9]),(False,[]),(False,[0,1,2,3,4])]
+-}
+
+ordenaListaDupla::[(Bool, [Int])]->[(Bool, [Int])]
+ordenaListaDupla [] = []
 
 
 
