@@ -25,3 +25,9 @@ ex1 :: Int  -> Int
 ex1 x  = sum [a*a|a <- [1..x]]
 
 --Ex 2--
+replicate1 :: Int -> a -> [a]
+replicate1 x a= [a|b <- [1..x]]
+
+
+
+
