@@ -1,3 +1,5 @@
+import Data.Char
+
 -- Exercicio 1 feito completamente sozinho --
 aux :: Int  -> [Int]
 aux x  = [(a*a)|a <- [1..x]]
@@ -39,7 +41,7 @@ perfects x = [a|a <- [1..x],a == sum[b|b <- [1..(a-1)], mod a b == 0]]
 --Ex 5--
 f1 = [(x,y) | x <- [1,2,3], y <- [4,5,6]]
 f2 = concat [[(x,y)| y <- [4,5,6]] | x <- [1,2,3]]
-f3 = concat [[(x,y)|x <- [1,2,3]] | y <- [4,5,6]]
+f3 = [[(x,y)|x <- [1,2,3]] | y <- [4,5,6]]
 
 --Ex 6--
 positions :: Eq a => a -> [a] -> [Int]
@@ -118,7 +120,7 @@ insertOrd a x = [b|b <- x, b < a] ++ [a] ++ [b|b <- x, b >= a]
 --Ex 14--
 
 howManyMultiples :: Int -> Int -> Int -> Int
-howManyMultiples a b c = length[d|d <- [b..c], mod d a == 0]
+howManyMultiples a b c = foldl (\x _-> x + 1) 0 [d|d <- [b..c], mod d a == 0]
 
 --Ex 15--
 duplicate :: String -> Int -> String
@@ -129,8 +131,56 @@ duplicate s n = foldl (\x y -> (++) x y) "" [s|a <- [1..n]]
 pushRight::String->Int->String
 pushRight x y
     |length x >= y = x
-    |otherwise = ['>'|z <- [1..(y - length x)]] ++ x
+    |otherwise = foldr (:) x  ['>'|z <- [1..(y - length x)]]
+    {-(elemento da lista) -> (acumulador) -> (novo acumulador).
+
+Elemento: Char (>)
+
+Acumulador: String (x)
+
+Isso encaixa perfeitamente com o operador (:). 
+O foldr passa o > e depois a string, e o operador : os junta feliz da vida.-}
         
 --Ex 17--
 inverte :: [Int] -> [Int]
-inverte x = [y|y <- x]
+inverte x = foldl (flip (:)) [] [y|y <- x] --(acumulador) -> (elemento da lista) -> (novo acumulador)
+
+--Ex 18--
+separa::[Int] -> ([Int], [Int])
+separa x = ([y|y <- x, odd y], [z|z <- x, even z])
+
+--Ex 19--
+converte :: [Int] -> String
+converte x = [chr (a+64)|a <- x]
+
+--Ex 20--
+conta :: [Char] -> Char -> Int
+conta x y = foldl (\x _ -> x + 1) 0 [1|a <- x, a == y]
+
+--Ex 21--
+proliCharAux :: Char -> String
+proliCharAux x = [x|a <- [1..ord x - 64]]
+
+proliferaChar :: [Char] -> String
+proliferaChar x = concat (map proliCharAux x)
+
+--Ex 22--
+
+procuraElemento :: Int -> [Int] -> Bool
+procuraElemento _ [] = False
+procuraElemento n (x:xs) = n == x || procuraElemento n xs
+
+procuraElemento2 :: Int -> [Int] -> Bool
+procuraElemento2 _ [] = False
+procuraElemento2 n (x:xs) = procuraElemento2 n xs || n == x
+
+{-
+A função que da certo para todos os casos é somente a primeira, pois a segunda, ela da erro caso
+o numero que passemos seja o primeiro da lista, pois depois que ele faz a recursão, ele vai comparando e fazendo o ou
+entao se fosse uma lista [1,2,3], e o n fosse 1, primeiro ele desconstruiria a lista, e depois ia reconstruindo, mas na primeira 
+comparação, ele ia chegar na lista vazia, e ia quebrar o programa, pois a lista vazia nao tem nada pra comparar
+-}
+
+--Ex 23--
+--A Restrição Eq a =>: Diz ao compilador: "Haskell, essa função aceita um tipo a qualquer, 
+--DESDE QUE esse tipo pertença ao clube Eq e saiba usar o operador ==".
